@@ -1,0 +1,21 @@
+.parish {
+  align-items: flex-start;
+  padding: 0 60px;
+}
+
+.parish:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.parish .header {
+  margin-bottom: 8px;
+}
+
+.parish p {
+  padding-left: 3px;
+  border-left: 3px solid rgba(0, 0, 0, 0);
+}
+
+.parish p:hover {
+  border-left: 3px solid orange;
+}

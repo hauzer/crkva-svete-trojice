@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+
+  font-weight: normal;
+  text-align: center;
+  text-decoration: none;
+}
+
+html {
+  color: rgb(51, 51, 51);
+  font-family: 'Lora', serif;
+  font-size: 16px;
+}
+
+html, body, div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div, img {
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.15em;
+}
+
+p {
+  text-align: justify;
+}
+
+strong {
+  font-weight: bold;
+}
+
+a, a:visited {
+  color: rgb(74, 84, 88);
+  transition: color 0.25s;
+}
+
+a:hover {
+  color: #80805a;
+  transition: color 0.15s;
+}
+
+.stacked-container-wrapper {
+  position: relative;
+}
+
+.stacked-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.horizontal-separator {
+  width: 100%;
+  min-height: 1px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+html, body {
+  width: 100%;
+}
+
+html, body, #content {
+  min-height: 100vh;
+}
+
+body {
+  background:
+    linear-gradient(rgba(166,197,228,0.8) 10%, rgba(212,231,246, 0.8) 40%, rgba(76,99,56, 0.8)),
+    url('../img/background.jpg');
+}
+
+#content {
+  width: 700px;
+
+  background-color: rgba(245, 222, 179, 0.65);
+}
+
+#header {
+
+}
+
+#header .stacked-container {
+  justify-content: flex-end;
+}
+
+#header .title {
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  color: #fbfbbc;
+  background-color: rgba(0, 0, 0, 0.35);
+
+  font-size: 1.5em;
+  font-family: 'Bad Script', cursive;
+}
+
+#header nav {
+  padding-top: 7px;
+  padding-bottom: 9px;
+
+  flex-direction: row;
+  font-family: 'Playfair Display', serif;
+}
+
+#header nav .tab {
+  margin: 0 7px;
+}
+
+#header + .horizontal-separator {
+  width: 50%;
+}
+
+#main {
+  padding: 15px 70px;
+  height: 100%;
+  font-size: 0.95em;
+}
+
+#main + .horizontal-separator {
+  width: 80%;
+}
+
+#footer {
+  padding: 10px;
+  font-size: 0.75em;
+}
+
+.main-title {
+  padding: 10px;
+  margin-bottom: 15px;
+
+  font-size: 1.4em;
+  font-style: italic;
+  color: black;
+
+  border: 1px solid #b92e2e66;
+  border-radius: 10px;
+}
+
+.articles .horizontal-separator {
+  width: 20%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.article .header {
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.article .title {
+  margin-bottom: 5px;
+}
+
+.article p:not(:last-child) {
+  margin-bottom: 8px;
+}

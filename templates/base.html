@@ -1,0 +1,112 @@
+{% macro render_article(article, excerpt=False, link_month=True, link_year=True) -%}
+  <div class='article'>
+    <div class='header'>
+      {% if excerpt %}
+        <a href='{{ url_for("article",
+                            year=article.date.year,
+                            month_name=article.month_name["latn"],
+                            slug=article.slug) }}' class='title'
+        >
+          <h1>{{ article.title }}</h1>
+        </a>
+      {% else %}
+        <h1 class='title'>{{ article.title }}</h1>
+      {% endif %}
+      <p>
+        {{ article.date.day }}.
+        {% if link_month %}
+          <a href='{{ url_for("month", year=article.date.year, month_name=article.month_name["latn"]) }}'>
+            {{ article.month_name['cyrl'] }}
+          </a>
+        {% else %}
+          {{ article.month_name['cyrl'] }}
+        {% endif %}
+        {% if link_year %}
+          <a href='{{ url_for("year", year=article.date.year) }}'>
+            {{ article.date.year }}
+          </a>
+        {% else %}
+          {{ article.date.year }}.
+        {% endif %}
+      </p>
+    </div>
+    <div class='content'>
+      {% if excerpt %}
+        {{ article.excerpt|safe }}
+        {% if not article.is_short %}
+          <a href='{{ url_for("article",
+                              year=article.date.year,
+                              month_name=article.month_name["latn"],
+                              slug=article.slug) }}'
+          >
+            <p>oпширније</p>
+          </a>
+        {% endif %}
+      {% else %}
+        {{ article.content|safe }}
+      {% endif %}
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro render_articles(articles, excerpt=False, link_month=True, link_year=True) -%}
+  <div class='articles'>
+    {% for article in articles %}
+      {{ render_article(article, excerpt, link_month, link_year) }}
+      {% if not loop.last %}
+        <div class='horizontal-separator'></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
+<!doctype html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+  <link rel='stylesheet' href='{{ url_for_static("css/base.css") }}'/>
+  <link href="https://fonts.googleapis.com/css?family=Bad+Script|Lora|Playfair+Display" rel="stylesheet">
+  {% block css %}{% endblock %}
+  <title>{% block title %}{% endblock %}Црква Свете Тројице</title>
+</head>
+
+<body>
+  <div id='content'>
+    <div id='header'>
+      <a href='{{ url_for("index") }}'>
+        <div class='stacked-container-wrapper'>
+          <img src='{{ url_for_static("img/banner.jpg") }}'/>
+          <div class='stacked-container'>
+            <p class='title'>Црква Свете Тројице</p>
+          </div>
+        </div>
+      </a>
+
+      <nav>
+        {% for view, label in tabs.items() %}
+          {% if tab_view == view %}
+            <span class='tab'>{{ label }}</span>
+          {% else %}
+            <a href='{{ url_for(view) }}' class='tab'>{{ label }}</a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+    </div>
+
+    <div class='horizontal-separator'></div>
+
+    <div id='main'>
+      {% block main %}{% endblock %}
+    </div>
+
+    <div class='horizontal-separator'></div>
+
+    <div id='footer'>
+      <p>Црква Свете Тројице, Цара Душана 83, Земун; <a href='tel:+381112100301'>011/210‑0301</a></p>
+    </div>
+  </div>
+</body>
+
+</html>

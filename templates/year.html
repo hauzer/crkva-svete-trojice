@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Година {{ g.articles[0].date.year }}. - објаве – {% endblock %}
+{% block main %}
+<p class='main-title'>Година {{ g.articles[0].date.year }}. - објаве</p>
+{{ render_articles(g.articles, excerpt=True, link_year=False) }}
+{% endblock %}

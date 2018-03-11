@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}{{ g.article.title }} – {% endblock %}
+{% block main %}
+{{ render_article(g.article) }}
+{% endblock %}
