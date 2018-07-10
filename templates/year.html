@@ -1,6 +1,13 @@
+{% from 'macros.html' import render_articles %}
+
 {% extends 'base.html' %}
-{% block title %}Година {{ g.articles[0].date.year }}. - објаве – {% endblock %}
+
+{% set title %}
+Објаве из године {{ g.articles[0].date.year }}.
+{% endset %}
+
+{% block title %}{{ title }} – {% endblock %}
 {% block main %}
-<p class='main-title'>Година {{ g.articles[0].date.year }}. - објаве</p>
-{{ render_articles(g.articles, excerpt=True, link_year=False) }}
+  <p class='main-title'>{{ title }}</p>
+  {{ render_articles(g.articles, full_display=False, linked=True, link_year=False) }}
 {% endblock %}

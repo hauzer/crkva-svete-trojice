@@ -15,14 +15,17 @@ html {
   font-size: 16px;
 }
 
-html, body, div {
+html,
+body,
+div,
+nav {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-div, img {
+div {
   width: 100%;
 }
 
@@ -52,6 +55,7 @@ a:hover {
   transition: color 0.15s;
 }
 
+
 .stacked-container-wrapper {
   position: relative;
 }
@@ -70,6 +74,7 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.25);
 }
 
+
 html, body {
   width: 100%;
 }
@@ -84,14 +89,19 @@ body {
     url('../img/background.jpg');
 }
 
-#content {
-  width: 700px;
 
+#content {
+  max-width: 700px;
   background-color: rgba(245, 222, 179, 0.65);
 }
 
+
 #header {
 
+}
+
+#header img {
+  width: 100%;
 }
 
 #header .stacked-container {
@@ -99,7 +109,7 @@ body {
 }
 
 #header .title {
-  padding: 5px 10px;
+  padding: 2px 15px;
   border-radius: 5px;
 
   color: #fbfbbc;
@@ -117,40 +127,111 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
+@media only screen and (max-width: 400px) {
+  #header nav {
+    flex-direction: column;
+  }
+}
+
 #header nav .tab {
   margin: 0 7px;
+  padding-bottom: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+#header nav .active.tab {
+  border-bottom: 1px solid rgba(218, 105, 0, 0.329);
 }
 
 #header + .horizontal-separator {
   width: 50%;
 }
 
+
 #main {
+  flex: 1;
+  justify-content: flex-start;
   padding: 15px 70px;
-  height: 100%;
   font-size: 0.95em;
+}
+
+@media only screen and (max-width: 500px) {
+  #main {
+    padding: 15px 30px;
+  }
 }
 
 #main + .horizontal-separator {
   width: 80%;
 }
 
+
 #footer {
-  padding: 10px;
+  padding: 10px 70px;
+  flex-direction: row;
+  justify-content: space-between;
   font-size: 0.75em;
 }
 
+@media only screen and (max-width: 550px) {
+  #footer {
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  #footer > div:not(:first-child) {
+    padding-bottom: 20px;
+  }
+}
+
+#footer .the-patriarch {
+  flex: 0.25;
+}
+
+#footer .info {
+  flex: 0.5;
+  margin-right: 10px;
+}
+
+#footer .info p {
+  text-align: unset;
+}
+
+#footer .schedule {
+  flex: 0.25;
+}
+
+#footer .schedule p {
+  text-align: left;
+}
+
+@media only screen and (min-width: 551px) {
+  #footer .schedule {
+    align-items: flex-start;
+  }
+}
+
 .main-title {
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 15px;
 
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-style: italic;
-  color: black;
 
-  border: 1px solid #b92e2e66;
-  border-radius: 10px;
+  border-bottom: 1px solid #7eb3d679;
 }
+
+
+.text {
+  display: block;
+  text-align: justify;
+}
+
+.text p:not(:last-child) {
+  margin-bottom: 8px;
+}
+
 
 .articles .horizontal-separator {
   width: 20%;
@@ -167,6 +248,139 @@ body {
   margin-bottom: 5px;
 }
 
-.article p:not(:last-child) {
-  margin-bottom: 8px;
+.article .excerpt {
+  position: relative;
+  max-height: 600px;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+.article .more {
+  padding-top: 5px;
+  text-align: center;
+}
+
+.image {
+  display: inline-block;
+}
+
+.image.no-link .main {
+  cursor: zoom-in;
+}
+
+.image .zoom {
+  display: none;
+  position: relative;
+  align-self: right;
+  width: 100%;
+  outline: 0;
+}
+
+.image:hover .zoom {
+  display: block;
+}
+
+.image .zoom img {
+  position: absolute;
+  right: 1.6px;
+  bottom: 1.6px;
+  width: 20px;
+  padding: 1px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.image .main img {
+  width: 100%;
+}
+
+.image .popup,
+.image .popup .back {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+.image .popup {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+.image .popup img {
+  display: block;
+}
+
+.image .popup .back {
+  z-index: 2;
+  cursor: zoom-out;
+}
+
+.image .popup .full {
+  position: relative;
+  z-index: 3;
+}
+
+.image .popup .full .link {
+  cursor: zoom-in;
+}
+
+.image .popup .full img {
+  max-width: 99vw;
+  max-height: 100vh;
+}
+
+.image .popup .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 7px;
+  background-color: rgba(255, 255, 255, 0.35);
+  transition: background-color ease-in-out 0.1s;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.image .popup .close:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.image .popup .close img {
+  width: 15px;
+}
+
+.image .popup:target {
+  display: flex;
+}
+
+.image:not(.left):not(.right) {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.image.right,
+.image.left {
+  max-width: 37%;
+  max-height: 70vh;
+
+  padding: 15px;
+  padding-bottom: 0;
+}
+
+.image.right {
+  float: right;
+  padding-right: 0;
+}
+
+.image.left {
+  float: left;
+  padding-left: 0;
 }

@@ -1,0 +1,95 @@
+{% macro image(src, link=None, float='') -%}
+  {% set id = "slika-{}".format(g.n_images[0]) %}
+
+  {% if link is none %}
+  <span class='{{ float }} image no-link'>
+    <a class='main' href='{{ "#{}".format(id) }}'>
+      <img class='main' src='{{ src }}'>
+    </a>
+  {% else %}
+  <span class='{{ float }} image'>
+    <a class='main' href='{{ link }}'>
+      <img src='{{ src }}'>
+    </a>
+    <a class='zoom' href='{{ "#{}".format(id) }}'>
+      <img src='{{ url_for_static("img/magnifying-glass.png") }}'>
+    </a>
+  {% endif %}
+
+    <span class='popup' id='{{ id }}'>
+      <span class='full'>
+        <a class='link' href='{{ src }}' target='_'>
+          <img src='{{ src }}'>
+        </a>
+        <a class='close' href='##'>
+          <img src='{{ url_for_static("img/x.png") }}'>
+        </a>
+      </span>
+      <a class='back' href='##'></a>
+    </span>
+  </span>
+
+  {% set _ = g.n_images.append(g.n_images.pop() + 1) %}
+{%- endmacro %}
+
+{% macro render_article(article, full_display=True, linked=False, link_month=True, link_year=True) -%}
+  <div class='article'>
+    <div class='header'>
+      {% if linked %}
+        <a href='{{ url_for("article",
+                            year=article.date.year,
+                            month_name=article.month_name["latn"],
+                            slug=article.slug) }}' class='title'
+        >
+          <h1>{{ article.title }}</h1>
+        </a>
+      {% else %}
+        <h1 class='title'>{{ article.title }}</h1>
+      {% endif %}
+      <p>
+        {{ article.date.day }}.
+        {% if link_month %}
+          <a href='{{ url_for("month", year=article.date.year, month_name=article.month_name["latn"]) }}'>
+            {{ article.month_name['cyrl'] }}
+          </a>
+        {% else %}
+          {{ article.month_name['cyrl'] }}
+        {% endif %}
+        {% if link_year %}
+          <a href='{{ url_for("year", year=article.date.year) }}'>
+            {{ article.date.year }}.
+          </a>
+        {% else %}
+          {{ article.date.year }}.
+        {% endif %}
+      </p>
+    </div>
+    <div class='text'>
+      {% if full_display or article.is_short %}
+        {% include article.path %}
+      {% else %}
+          <div class='excerpt'>
+            {% include article.path %}
+          </div>
+          <a href='{{ url_for("article",
+                              year=article.date.year,
+                              month_name=article.month_name["latn"],
+                              slug=article.slug) }}'
+          >
+            <p class='more'>oпширније</p>
+          </a>
+      {% endif %}
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro render_articles(articles) -%}
+  <div class='articles'>
+    {% for article in articles %}
+      {{ render_article(article, *varargs, **kwargs) }}
+      {% if not loop.last %}
+        <div class='horizontal-separator'></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{%- endmacro %}

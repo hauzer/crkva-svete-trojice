@@ -1,0 +1,79 @@
+.clergyman:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.clergyman .header {
+  padding-bottom: 5px;
+}
+
+.clergyman .content {
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 700px) {
+  .clergyman .content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.clergyman .content .photo {
+  max-width: 250px;
+}
+
+@media only screen and (min-width: 700px) {
+  .clergyman .content .photo {
+    max-width: 250px;
+  }
+
+  .clergyman .content .parish {
+    padding-top: 10px;
+  }
+
+  .clergyman:nth-child(even) .content .parish {
+    padding-left: 30px;
+  }
+
+  .clergyman:nth-child(odd) .content .parish {
+    padding-right: 30px;
+  }
+
+  .clergyman:nth-child(odd) .content {
+    flex-direction: row-reverse;
+  }
+
+  .clergyman:nth-child(even) .parish {
+    align-items: flex-start;
+  }
+
+  .clergyman:nth-child(odd) .parish {
+    align-items: flex-end;
+  }
+
+  .clergyman:nth-child(even) .parish p {
+    padding-left: 3px;
+    border-left: 3px solid rgba(0, 0, 0, 0);
+  }
+
+  .clergyman:nth-child(odd) .parish p {
+    padding-right: 3px;
+    border-right: 3px solid rgba(0, 0, 0, 0);
+  }
+}
+
+@media only screen and (max-width: 699px) {
+  .clergyman .parish p:nth-child(odd) {
+    background-color: rgba(255, 190, 70, 0.123);
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .clergyman:nth-child(even) .parish p:hover {
+    border-left: 3px solid orange;
+  }
+
+  .clergyman:nth-child(odd) .parish p:hover {
+    border-right: 3px solid orange;
+  }
+}

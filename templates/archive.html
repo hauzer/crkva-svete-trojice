@@ -1,0 +1,6 @@
+{% from 'macros.html' import render_articles %}
+{% set tab_view = 'archive' %}
+{% extends 'base.html' %}
+{% block main %}
+  {{ render_articles(g.articles, full_display=False, linked=True) }}
+{% endblock %}

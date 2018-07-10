@@ -1,0 +1,16 @@
+{% set tab_view = 'map' %}
+{% extends 'base.html' %}
+{% block title %}Мапа – {% endblock %}
+{% block css %}
+<link rel='stylesheet' href='{{ url_for_static("css/map.css") }}'>
+{% endblock %}
+{% block main %}
+<iframe
+  class='map'
+  width='550'
+  height='450'
+  frameborder='0' style='border:0'
+  src='https://www.google.com/maps/embed/v1/place?q=Holly+Trinity+Church&language=sr_Latn_RS&region=rs&key=AIzaSyDg1KK8Vg_44bbdkOrWbqlaWHXP2yGJ_Lo'
+  allowfullscreen>
+</iframe>
+{% endblock %}

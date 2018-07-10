@@ -1,4 +1,5 @@
+{% from 'macros.html' import  image, render_article %}
 {% extends 'base.html' %}
 {% block main %}
-{{ render_articles(g.articles, excerpt=True) }}
+  {{ render_article(g.article, linked=True) }}
 {% endblock %}

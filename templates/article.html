@@ -1,5 +1,6 @@
+{% from 'macros.html' import render_article %}
 {% extends 'base.html' %}
 {% block title %}{{ g.article.title }} – {% endblock %}
 {% block main %}
-{{ render_article(g.article) }}
+  {{ render_article(g.article) }}
 {% endblock %}

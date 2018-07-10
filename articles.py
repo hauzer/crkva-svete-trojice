@@ -5,37 +5,47 @@ from itertools import groupby
 import os
 import re
 
-from markdown import markdown
+from bs4 import BeautifulSoup
 from slugify_sr_cyrl import slugify_sr_cyrl
 from app import app
+
+
+ARTICLES_DIR = 'articles'
 
 
 class Article:
     def __init__(self, path):
         self.filename = os.path.basename(path)
-        filename_parse = re.match('^(\d{4}-\d{2}-\d{2}) (.+?)\.md$', self.filename).groups()
+        self.path = os.path.join(ARTICLES_DIR, self.filename)
+        filename_re_groups = re.match('^(\d{4}-\d{2}-\d{2}) (.+?)\.html$', self.filename).groups()
 
-        self.title = filename_parse[1]
-        self.date = datetime.strptime(filename_parse[0], '%Y-%m-%d')
+        self.title = filename_re_groups[1]
+        self.date = datetime.strptime(filename_re_groups[0], '%Y-%m-%d')
         self.month_name = {
             'cyrl': get_month_names('wide', locale='sr_Cyrl_RS')[self.date.month],
             'latn': get_month_names('wide', locale='sr_Latn_RS')[self.date.month],
         }
 
-        with open(path, 'r') as content:
-            self.content = markdown(content.read())
-        self.excerpt = '\n'.join(self.content.splitlines()[:5])
-        self.is_short = self.content == self.excerpt
-
+        self.aprox_size = None
         self.slug = slugify_sr_cyrl(self.title)
+
+    @property
+    def is_short(self):
+        if not self.aprox_size:
+            bs = BeautifulSoup(app.jinja_env.get_template(self.path).render(), 'html.parser')
+
+            self.aprox_size = 0
+            self.aprox_size += len(bs.find_all('span', class_='image')) * 300
+            for p in bs.find_all('p'):
+                self.aprox_size += len(p.text) * 0.3
+
+        return self.aprox_size <= 600
 
 
 def collect():
-    month_names = get_month_names('wide', locale='sr_Latn_RS')
-
     articles = {}
     articles['sorted-list'] = []
-    articles_dir = os.path.join(app.root_path, 'articles')
+    articles_dir = os.path.join(app.template_folder, ARTICLES_DIR)
     _, _, article_files = next(os.walk(articles_dir))
     for article_file in sorted(article_files, reverse=True):
         article_path = os.path.join(articles_dir, article_file)
@@ -48,6 +58,8 @@ def collect():
         articles['by-year'][year]['sorted-list'] = articles_by_year
         articles['by-year'][year]['by-month'] = {}
         articles['by-year'][year]['by-month-name'] = {}
+
+        month_names = get_month_names('wide', locale='sr_Latn_RS')
         for month, articles_by_month in groupby(articles_by_year, lambda a: a.date.month):
             articles_by_month = list(articles_by_month)
 
@@ -66,8 +78,4 @@ def collect():
     return articles
 
 
-articles = collect()
-
-
-def get():
-    return articles
+collection = collect()

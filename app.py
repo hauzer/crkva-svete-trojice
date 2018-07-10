@@ -1,6 +1,6 @@
-from flask import Flask, url_for
+from flask import Flask, g, url_for
 from flask_session import Session
-from markdown import markdown
+from flask_misaka import Misaka
 
 
 class Config:
@@ -15,9 +15,12 @@ app.config.from_object(Config)
 app.config.from_envvar('{}_SETTINGS'.format(__name__.upper()), silent=True)
 
 Session(app)
+Misaka(app)
 
 
-app.jinja_env.filters['markdown'] = markdown
+@app.before_request
+def set_images_counter():
+    g.n_images = [1]
 
 
 @app.template_global()
@@ -26,9 +29,9 @@ def url_for_static(filename, *args, **kwargs):
 
 
 app.add_template_global({
+    'archive':  'Догађаји',
     'history':  'Историјат',
     'clergy':   'Свештенство',
-    'parishes': 'Парохије',
-    'schedule': 'Распоред',
-    'contact':  'Контакт',
+    # 'schedule': 'Богослужење',
+    'map':     'Мапа',
 }, 'tabs')
