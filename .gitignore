@@ -3,4 +3,3 @@ apache
 logs
 sessions
 *.code-workspace
-.python-version
