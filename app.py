@@ -32,6 +32,5 @@ app.add_template_global({
     'archive':  'Догађаји',
     'history':  'Историјат',
     'clergy':   'Свештенство',
-    # 'schedule': 'Богослужење',
     'map':     'Мапа',
 }, 'tabs')
